@@ -1,1 +1,776 @@
+<!-- ArcGIS-styled dashboard created to display rail crossing risks in Ottawa. 
+Author: Hannah Rivet
+Project started: September 20, 2026
+References:
+  Ottawa's railway lines: https://open.ottawa.ca/datasets/3adbf9b1045e445aa92ccf84b42ec300_50/explore
+  Canada grade crossings inventory: https://open.canada.ca/data/en/dataset/d0f54727-6c0b-4e5a-aa04-ea1463cf9f4c
+  Census Subdivision Boundary Files: https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-s-eng.cfm?year=25
+  Sudbury's railway lines: QuickOSM from QGIS
+-->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ottawa Rail Crossing Risk Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      box-sizing: border-box;
+      --paper: #EEF0F2;
+      --paper-alt: #E4E8EA;
+      --ink: #14212A;
+      --muted: #5C6B73;
+      --accent: #B5573A;   /* rust — highest risk */
+      --amber: #B98D4A;    /* ochre — moderate risk */
+      --forest: #3C6E52;   /* green — lower risk */
+      --line: #C7CDD1;
+      --panel-h: 560px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, .label, select, .mono {
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    }
+
+    .wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- header ---------- */
+
+    header {
+      position: relative;
+      padding: 44px 0 24px;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .contours {
+      position: absolute;
+      top: -60px;
+      right: -100px;
+      width: 340px;
+      height: 340px;
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .contours path {
+      fill: none;
+      stroke: var(--forest);
+      stroke-width: 1.4;
+    }
+
+    .header-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .coord {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      margin: 0 0 12px;
+    }
+
+    header h1 {
+      font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+      margin: 0 0 12px;
+      max-width: 34ch;
+      font-weight: 700;
+    }
+
+    header p.lede {
+      max-width: 78ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin: 0 0 14px;
+    }
+
+    header p.finding {
+      max-width: 78ch;
+      color: var(--ink);
+      font-size: 1rem;
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    header p.finding b {
+      color: var(--accent);
+    }
+
+    /* ---------- KPI cards ---------- */
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      padding: 24px 0;
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
+      background: var(--paper-alt);
+      padding: 16px 18px;
+      border-radius: 2px;
+    }
+
+    .kpi .num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .kpi .lbl {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ---------- filter controls ---------- */
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 8px 0 20px;
+      align-items: center;
+    }
+
+    .controls label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-right: 6px;
+    }
+
+    select {
+      background: var(--paper-alt);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      border-radius: 2px;
+    }
+
+    .legend-row {
+      display: flex;
+      gap: 16px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .legend-row span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.high { background: var(--accent); }
+    .dot.mod  { background: var(--amber); }
+    .dot.low  { background: var(--forest); }
+
+    /* ---------- main grid: map + chart/list ---------- */
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 20px;
+      padding-bottom: 32px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--paper-alt);
+      border-radius: 2px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      height: var(--panel-h);
+    }
+
+    .panel h3 {
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+      flex: none;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex: none;
+    }
+
+    .panel-head h3 {
+      margin: 0;
+    }
+
+    .panel-head select {
+      font-size: 0.78rem;
+      padding: 4px 8px;
+    }
+
+    #map {
+      flex: 1;
+      min-height: 0;
+      border-radius: 2px;
+    }
+
+    .chart-box {
+      height: 190px;
+      margin-bottom: 18px;
+      flex: none;
+    }
+
+    .list {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--line);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    .row:hover {
+      background: rgba(20, 33, 42, 0.05);
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .row .rk {
+      width: 52px;
+      flex: none;
+      color: var(--muted);
+    }
+
+    .row .loc {
+      flex: 1;
+      color: var(--ink);
+    }
+
+    .row .prot {
+      font-size: 0.72rem;
+      color: var(--muted);
+      flex: none;
+    }
+
+    /* ---------- protection glossary ---------- */
+
+    .info-panel {
+      border-top: 1px solid var(--line);
+      padding: 40px 0;
+      margin-bottom: 8px;
+    }
+
+    .info-panel h3 {
+      margin: 0 0 18px;
+      font-size: 1.2rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .info-grid dt {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+
+    .info-grid dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    /* ---------- footer ---------- */
+
+    footer {
+      padding: 24px 0 56px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 2px;
+      font-size: 0.85rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    @media (max-width: 900px) {
+      :root { --panel-h: 420px; }
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .main-grid { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      .contours { width: 220px; height: 220px; right: -70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <svg class="contours" viewBox="0 0 400 400" aria-hidden="true">
+      <path d="M40,200 C40,110 120,40 210,40 C300,40 360,110 360,200 C360,290 300,350 210,350 C120,350 40,290 40,200 Z"/>
+      <path d="M90,200 C90,140 145,90 210,90 C275,90 320,140 320,200 C320,260 275,300 210,300 C145,300 90,260 90,200 Z"/>
+      <path d="M135,200 C135,165 170,135 210,135 C250,135 275,165 275,200 C275,235 250,265 210,265 C170,265 135,235 135,200 Z"/>
+    </svg>
+
+    <div class="wrap header-inner">
+      <p class="coord">45.35&deg;N, 75.75&deg;W &mdash; Ottawa, Ontario</p>
+      <h1>Rail crossing risk across Ottawa</h1>
+      <p class="lede">
+        This dashboard maps every rail-road grade crossing in Ottawa using Transport Canada's
+        national crossing risk model (GradeX), so that crossings with high traffic, high train speed, or
+        limited warning systems can be identified before they show up in a collision record.
+        Use the filters to explore by risk tier or protection type, or click any crossing in the
+        list to locate it on the map.
+      </p>
+      <p class="finding" id="headline">Loading&hellip;</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="controls">
+      <div>
+        <label for="riskFilter">Risk class</label>
+        <select id="riskFilter">
+          <option value="all">All</option>
+          <option value="high">Highest</option>
+          <option value="mod">Moderate</option>
+          <option value="low">Lower</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="protFilter">Protection</label>
+        <select id="protFilter">
+          <option value="all">All</option>
+        </select>
+      </div>
+
+      <div class="legend-row">
+        <span><i class="dot high"></i>Highest risk</span>
+        <span><i class="dot mod"></i>Moderate risk</span>
+        <span><i class="dot low"></i>Lower risk</span>
+      </div>
+    </div>
+
+    <div class="main-grid">
+
+      <div class="panel">
+        <h3>Crossings by location (colored by risk)</h3>
+        <div id="map"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Crossings by risk class</h3>
+        <div class="chart-box"><canvas id="riskChart"></canvas></div>
+
+        <div class="panel-head">
+          <h3>All crossings</h3>
+          <select id="sortDir">
+            <option value="asc">Rank: highest risk first</option>
+            <option value="desc">Rank: lowest risk first</option>
+          </select>
+        </div>
+
+        <div class="list" id="list"></div>
+      </div>
+
+    </div>
+
+    <div class="info-panel">
+      <h3>Understanding crossing protection types</h3>
+      <dl class="info-grid">
+        <div>
+          <dt>Active &ndash; FLBG</dt>
+          <dd>
+            Flashing lights, bells, and automatic gates. The highest level of active warning &mdash;
+            gates physically block the road when a train approaches.
+          </dd>
+        </div>
+        <div>
+          <dt>Active &ndash; FLB</dt>
+          <dd>
+            Flashing lights and bells, but no gates. Drivers are warned automatically, but nothing
+            physically prevents crossing the tracks.
+          </dd>
+        </div>
+        <div>
+          <dt>Passive</dt>
+          <dd>
+            Static signage only (e.g. a stop or yield sign) &mdash; no automatic warning of an
+            approaching train. Relies entirely on the driver looking and listening.
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <footer>
+      Data: Transport Canada Grade Crossings Inventory &middot; Statistics Canada (city boundary)
+      &middot; OpenStreetMap (rail lines). Basemap &copy; Esri. Risk rank is Transport Canada's
+      national GradeX score (lower number = higher relative risk, out of 24,853 assessed
+      crossings nationwide).
+    </footer>
+
+  </div>
+
+  <script>
+    const HIGH_RISK_THRESHOLD = 2825;
+      function riskClass(r) {
+      return r <= HIGH_RISK_THRESHOLD ? 'high' : (r <= 9287 ? 'mod' : 'low');
+    }
+
+    const RISK_COLOR = { high: '#B5573A', mod: '#B98D4A', low: '#3C6E52' };
+    const RISK_LABEL = { high: 'Highest', mod: 'Moderate', low: 'Lower' };
+    const NATIONAL_TOTAL = 24853;
+
+    // ---------------------------------------------------------------
+    // Base map
+    // ---------------------------------------------------------------
+
+    const HOME_VIEW = { center: [45.253007, -75.7398063], zoom: 9 };
+    const map = L.map('map').setView(HOME_VIEW.center, HOME_VIEW.zoom);
+
+    L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+      {
+        maxZoom: 16,
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+      }
+    ).addTo(map);
+
+    L.control.scale({
+      metric: true,
+      imperial: false,
+      position: 'bottomright'
+    }).addTo(map);
+
+    // ---------------------------------------------------------------
+    // Home button (resets to the original view)
+    // ---------------------------------------------------------------
+
+    const HomeControl = L.Control.extend({
+      options: { position: 'topleft' },
+
+      onAdd: function () {
+        const btn = L.DomUtil.create('a', 'leaflet-bar-part');
+        btn.href = '#';
+        btn.title = 'Reset view';
+        btn.innerHTML = '&#8962;';
+        btn.style.cssText =
+          'display:flex; align-items:center; justify-content:center; ' +
+          'width:26px; height:26px; background:white; color:#333; ' +
+          'font-size:15px; text-decoration:none;';
+
+        const wrapper = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        wrapper.appendChild(btn);
+
+        L.DomEvent.on(btn, 'click', L.DomEvent.stop)
+          .on(btn, 'click', () => map.setView(HOME_VIEW.center, HOME_VIEW.zoom));
+
+        return wrapper;
+      }
+    });
+
+    map.addControl(new HomeControl());
+
+    // ---------------------------------------------------------------
+    // On-map legend
+    // ---------------------------------------------------------------
+
+    const mapLegend = L.control({ position: 'bottomleft' });
+
+    mapLegend.onAdd = function () {
+      const div = L.DomUtil.create('div', 'legend');
+      div.innerHTML = `
+        <div style="background:white; padding:10px 14px; border-radius:4px;
+                    box-shadow:0 1px 4px rgba(0,0,0,0.2); font-family:'Space Grotesk',sans-serif;
+                    font-size:13px; line-height:1.6; color:#14212A;">
+          <strong style="display:block; margin-bottom:6px;">Crossing risk</strong>
+          <div><span style="display:inline-block; width:10px; height:10px; border-radius:50%;
+               background:#B5573A; margin-right:6px;"></span>Highest risk</div>
+          <div><span style="display:inline-block; width:10px; height:10px; border-radius:50%;
+               background:#B98D4A; margin-right:6px;"></span>Moderate risk</div>
+          <div><span style="display:inline-block; width:10px; height:10px; border-radius:50%;
+               background:#3C6E52; margin-right:6px;"></span>Lower risk</div>
+          <hr style="margin:8px 0; border:none; border-top:1px solid #ddd;">
+          <div><span style="display:inline-block; width:16px; height:2px; background:#5C6B73;
+               margin-right:6px; vertical-align:middle;"></span>Rail line</div>
+          <div><span style="display:inline-block; width:16px; height:2px; background:#B5573A;
+               margin-right:6px; vertical-align:middle;"></span>City boundary</div>
+        </div>`;
+      return div;
+    };
+
+    mapLegend.addTo(map);
+
+    // ---------------------------------------------------------------
+    // Context layers: city boundary + rail lines (non-interactive)
+    // ---------------------------------------------------------------
+
+    fetch("Data/GovernmentofCanada/CensusOfPopulation/ottawa_boundary.geojson")
+      .then(res => res.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: { color: "#B5573A", weight: 2, fillOpacity: 0.05 },
+          interactive: false
+        }).addTo(map);
+      });
+
+    fetch("Data/OpenOttawa/Railway_Lines/railway_lines_clipped.geojson")
+      .then(res => res.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: { color: "#5C6B73", weight: 2, opacity: 0.8 },
+          interactive: false
+        }).addTo(map);
+      });
+
+    // ---------------------------------------------------------------
+    // Crossings: KPIs, markers, chart, list, filters
+    // ---------------------------------------------------------------
+
+    const markers = [];
+    let ROWS = [];
+    let chart;
+    let sortDir = 'asc';
+
+    Papa.parse("Data/OpenCanada/ottawa_crossings_cleaned.csv", {
+      download: true,
+      header: true,
+      dynamicTyping: true,
+
+      complete: function (results) {
+        ROWS = results.data.filter(row => row.Latitude && row.Longitude);
+        ROWS.forEach(row => { row.cls = riskClass(row.Rank); });
+
+        // ---- KPI cards ----
+        const counts = { high: 0, mod: 0, low: 0 };
+        ROWS.forEach(row => counts[row.cls]++);
+
+        const top = ROWS.reduce((a, b) => (a.Rank < b.Rank ? a : b));
+
+        document.getElementById('kpis').innerHTML = [
+          { num: `${ROWS.length} of ${NATIONAL_TOTAL.toLocaleString()}`,
+          lbl: 'Crossings assessed here vs. nationally' },,
+          { num: `${counts.high} (${Math.round(counts.high / ROWS.length * 100)}%)`,
+            lbl: "Rank in Ottawa's highest-risk tier" },
+          { num: `#${top.Rank}`, lbl: `${top.Location} \u2014 highest nationally` },
+          // Out of all 24,853 crossings in Canada, what fraction rank at position 2,825 or higher (i.e., riskier)? -> so Ottawa's highest-risk tier is defined as the top ~11% riskiest crossings in the entire country
+          { num: `~${Math.round(HIGH_RISK_THRESHOLD / NATIONAL_TOTAL * 100)}%`,
+            lbl: 'Threshold for highest tier, nationally' }
+        ].map(k => `
+          <div class="kpi">
+            <div class="num">${k.num}</div>
+            <div class="lbl">${k.lbl}</div>
+          </div>
+        `).join('');
+
+        document.getElementById('headline').innerHTML = `
+          <b>${counts.high} of ${ROWS.length} crossings
+          (${Math.round(counts.high / ROWS.length * 100)}%)</b>
+          rank in Ottawa's highest risk tier, based on Transport Canada's national crossing
+          risk model.
+        `;
+
+        // ---- protection filter options ----
+        const protFilter = document.getElementById('protFilter');
+        [...new Set(ROWS.map(r => r.Protection))].sort().forEach(p => {
+          const o = document.createElement('option');
+          o.value = p;
+          o.textContent = p;
+          protFilter.appendChild(o);
+        });
+
+        // ---- markers: popup + hover ----
+        ROWS.forEach(row => {
+          const trainSpeedMph = row["Train Max Speed (mph)"];
+          const trainSpeedKmh = trainSpeedMph ? Math.round(trainSpeedMph * 1.60934) : null;
+
+          const popupContent = `
+            <strong>${row.Location}</strong><br>
+            Rank: ${row.Rank} (${RISK_LABEL[row.cls]} risk)<br>
+            Railway: ${row["Railway Company"]}<br>
+            Subdivision: ${row.Subdivision}<br>
+            Protection: ${row.Protection}<br>
+            Vehicles/day: ${row["Vehicles Daily"]}<br>
+            Trains/day: ${row["Trains Daily"] ?? "N/A"}<br>
+            Road speed: ${row["Road Speed (km/h)"]} km/h<br>
+            Train speed: ${trainSpeedMph ? `${trainSpeedMph} mph (${trainSpeedKmh} km/h)` : "N/A"}
+          `;
+
+          const marker = L.circleMarker([row.Latitude, row.Longitude], {
+            radius: 6,
+            color: RISK_COLOR[row.cls],
+            fillColor: RISK_COLOR[row.cls],
+            fillOpacity: 0.85
+          })
+            .bindPopup(popupContent)
+            .on('mouseover', function () { this.setStyle({ radius: 9 }); })
+            .on('mouseout', function () { this.setStyle({ radius: 6 }); })
+            .addTo(map);
+
+          row._marker = marker;
+          markers.push(marker);
+        });
+
+        markers.forEach(m => m.bringToFront());
+
+        // ---- chart ----
+        const ctx = document.getElementById('riskChart');
+        chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Highest', 'Moderate', 'Lower'],
+            datasets: [{
+              data: [counts.high, counts.mod, counts.low],
+              backgroundColor: [RISK_COLOR.high, RISK_COLOR.mod, RISK_COLOR.low],
+              borderRadius: 2
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: {
+                ticks: { color: '#5C6B73', font: { family: 'Space Grotesk', size: 11 } },
+                grid: { display: false }
+              },
+              y: {
+                ticks: { color: '#5C6B73', font: { family: 'Space Grotesk', size: 11 } },
+                grid: { color: 'rgba(20,33,42,0.08)' }
+              }
+            }
+          }
+        });
+
+        renderList(ROWS);
+
+        document.getElementById('riskFilter').addEventListener('change', applyFilters);
+        document.getElementById('protFilter').addEventListener('change', applyFilters);
+        document.getElementById('sortDir').addEventListener('change', (e) => {
+          sortDir = e.target.value;
+          applyFilters();
+        });
+      }
+    });
+
+    // ---------------------------------------------------------------
+    // List + map interaction
+    // ---------------------------------------------------------------
+
+    function highlightCrossing(row) {
+      map.setView([row.Latitude, row.Longitude], Math.max(map.getZoom(), 13));
+      row._marker.openPopup();
+      row._marker.setStyle({ radius: 11 });
+      setTimeout(() => row._marker.setStyle({ radius: 6 }), 1200);
+    }
+
+    function renderList(filtered) {
+      const sorted = filtered.slice().sort((a, b) =>
+        sortDir === 'asc' ? a.Rank - b.Rank : b.Rank - a.Rank
+      );
+
+      const listEl = document.getElementById('list');
+      listEl.innerHTML = sorted.map(row => `
+        <div class="row" data-rank="${row.Rank}">
+          <span class="dot ${row.cls}"></span>
+          <span class="rk mono">#${row.Rank}</span>
+          <span class="loc">${row.Location}</span>
+          <span class="prot">${row.Protection.replace('Active - ', '')}</span>
+        </div>
+      `).join('');
+
+      listEl.querySelectorAll('.row').forEach(el => {
+        el.addEventListener('click', () => {
+          const rank = Number(el.dataset.rank);
+          const row = ROWS.find(r => r.Rank === rank);
+          if (row) highlightCrossing(row);
+        });
+      });
+    }
+
+    function applyFilters() {
+      const rf = document.getElementById('riskFilter').value;
+      const pf = document.getElementById('protFilter').value;
+      const filtered = [];
+
+      ROWS.forEach(row => {
+        const match = (rf === 'all' || row.cls === rf) && (pf === 'all' || row.Protection === pf);
+        row._marker.setStyle({
+          opacity: match ? 1 : 0.08,
+          fillOpacity: match ? 0.85 : 0.05
+        });
+        if (match) filtered.push(row);
+      });
+
+      renderList(filtered);
+    }
+  </script>
+
+</body>
+</html>
