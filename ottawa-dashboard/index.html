@@ -570,7 +570,7 @@ References:
     // Context layers: city boundary + rail lines (non-interactive)
     // ---------------------------------------------------------------
 
-    fetch("ottawa-dashboard/data/Census/ottawa_boundary.geojson")
+    fetch("data/Census/ottawa_boundary.geojson")
       .then(res => res.json())
       .then(data => {
         L.geoJSON(data, {
@@ -579,7 +579,7 @@ References:
         }).addTo(map);
       });
 
-    fetch("ottawa_dashboard/data/OpenOttawa/railway_lines_clipped.geojson")
+    fetch("data/OpenOttawa/railway_lines_clipped.geojson")
       .then(res => res.json())
       .then(data => {
         L.geoJSON(data, {
@@ -597,7 +597,7 @@ References:
     let chart;
     let sortDir = 'asc';
 
-    Papa.parse("ottawa-dashboard/data/OpenCanada/ottawa_crossings_cleaned.csv", {
+    Papa.parse("data/OpenCanada/ottawa_crossings_cleaned.csv", {
       download: true,
       header: true,
       dynamicTyping: true,
