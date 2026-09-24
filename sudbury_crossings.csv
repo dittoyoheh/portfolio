@@ -1,0 +1,84 @@
+Rank,TC Number,Railway Company,Region,Province,Access,Jurisdiction,Mile,Subdivision,Spur Mile Point,Spur Name,Location,Latitude,Longitude,Road  Authority,Protection,Accidents,Fatality,Injury,Trains Daily,Vehicles Daily,Train Max Speed (mph),Road Speed (km/h),Lanes,Tracks,IsUrban
+82,860,Canadian National Railway,ONT,ON,Public,F,271.52,Bala - CN,-,-,Cote Blvd 80 (Valley East,46.6503,-80.925,Greater Sudbury (ON),Active - FLBG,1,0,0,21.86,5600,70,60,2,1,Y
+326,861,Canadian National Railway,ONT,ON,Public,F,272.51,Bala - CN,-,-,Regional Road #84,46.66403,-80.9219,Greater Sudbury (ON),Active - FLBG,0,0,0,21.86,4100,70,80,2,1,Y
+332,854,Canadian National Railway,ONT,ON,Public,F,263.18,Bala - CN,-,-,Maley Drive,46.5373,-80.9162,Greater Sudbury (ON),Active - FLBG,0,0,0,21.86,5500,65,60,2,1,Y
+361,15216,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,2.55,Sudbury,Barrydowne Rd,46.5182,-80.9441,Greater Sudbury (ON),Active - FLB,1,0,2,4,14000,15,50,4,1,N
+530,859,Canadian National Railway,ONT,ON,Public,F,270.55,Bala - CN,-,-,Guenette St (Valley East),46.6358,-80.9272,Greater Sudbury (ON),Active - FLBG,0,0,0,25,1800,70,60,2,1,N
+743,20556,Canadian Pacific Railway,ONT,ON,Public,F,80.15,Cartier - CP,-,-,Kathleen Street,46.4999,-81.00762,Greater Sudbury (ON),Active - FLBG,1,0,0,9,10000,30,50,2,2,Y
+766,857,Canadian National Railway,ONT,ON,Public,F,269.7,Bala - CN,-,-,Bodson Dr (Valley East),46.6235,-80.9287,Greater Sudbury (ON),Active - FLBG,0,0,0,21.86,1200,70,80,2,1,N
+892,30180,Huron Central Railway,ONT,ON,Public,P,21.35,Webbwood - HCRC,0.19,Crean Hill,Old Hwy 17,46.3908,-81.3778,Greater Sudbury (ON),Passive,0,0,0,8,500,45,80,2,1,N
+925,15223,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,4.89,Sudbury,Cambrian Heights Dr,46.5077,-80.9888,Greater Sudbury (ON),Active - FLB,1,0,0,6,2000,10,50,2,1,N
+1500,20554,Canadian Pacific Railway,ONT,ON,Public,F,79.4,Cartier - CP,-,-,Elm Street,46.49309,-80.99827,Greater Sudbury (ON),Active - FLBG,0,0,0,9,10000,10,50,4,3,Y
+1531,300755,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,4.76,Sudbury,Notre Dame Ave.,46.5088,-80.9867,Greater Sudbury (ON),Active - FLBG,0,0,0,6,26000,10,60,2,1,N
+1618,855,Canadian National Railway,ONT,ON,Public,F,264.22,Bala - CN,-,-,O`Neil Dr,46.551,-80.9246,Greater Sudbury (ON),Active - FLBG,0,0,0,21,400,65,50,2,1,N
+1670,30182,Huron Central Railway,ONT,ON,Public,P,26.46,Webbwood - HCRC,-,-,Worthington Rd,46.3799,-81.4762,Greater Sudbury (ON),Passive,0,0,0,8,300,40,80,2,1,N
+1927,862,Canadian National Railway,ONT,ON,Public,F,275.63,Bala - CN,-,-,Young St (Capreol),46.7073,-80.924,Greater Sudbury (ON),Active - FLBG,0,0,0,21.86,2400,20,50,2,1,Y
+2038,20562,Canadian Pacific Railway,ONT,ON,Public,F,90.57,Cartier - CP,-,-,Regional Road 15,46.5807,-81.1822,Greater Sudbury (ON),Active - FLBG,0,0,0,9,5100,75,80,2,1,N
+2126,35550,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,2,Sudbury,Auger Avenue,46.52,-80.9329,Greater Sudbury (ON),Active - FLB,0,0,0,6,7000,10,50,2,1,Y
+2323,30174,Huron Central Railway,ONT,ON,Public,P,8.96,Webbwood - HCRC,-,-,Regional Road 24,46.4205,-81.14,Greater Sudbury (ON),Active - FLB,0,0,0,6,2500,40,80,2,1,N
+2424,26131,Canadian Pacific Railway,ONT,ON,Public,F,79.7,Cartier - CP,0.82,Nickel,Beatty St,46.4985,-81.0071,Greater Sudbury (ON),Active - FLB,0,0,0,2,30000,10,50,2,1,Y
+2776,20535,Canadian Pacific Railway,ONT,ON,Public,F,69.2,Cartier - CP,5.45,Falconbridge,Happy Valley Rd,46.5634,-80.8032,Greater Sudbury (ON),Passive,0,0,0,20,200,10,80,2,1,N
+2794,30166,Canadian Pacific Railway,ONT,ON,Public,F,79.17,Cartier - CP,1.5,Webbwood,Martindale Road,46.4772,-81.0177,Greater Sudbury (ON),Active - FLBG,0,0,0,2,20000,10,50,2,1,N
+2852,20534,Canadian Pacific Railway,ONT,ON,Public,F,69.2,Cartier - CP,3.28,Falconbridge,Town Line Rd,46.5367,-80.8173,Greater Sudbury (ON),Passive,0,0,0,19,200,10,80,2,1,N
+3011,30183,Huron Central Railway,ONT,ON,Public,P,28.08,Webbwood - HCRC,-,-,Regional Rd 3 Or 5?,46.3753,-81.509,Greater Sudbury (ON),Active - FLB,0,0,0,6,1000,40,80,2,1,N
+3097,300754,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,1.35,Sudbury,Falconbridge Rd.,46.5209,-80.9194,Greater Sudbury (ON),Active - FLB,0,0,0,6,10000,10,60,2,1,N
+3174,300756,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,5.44,Sudbury,Melvin Ave.,46.5029,-80.9981,Greater Sudbury (ON),Active - FLB,0,0,0,6,3000,10,50,2,1,Y
+3228,30168,Canadian Pacific Railway,ONT,ON,Public,F,79.17,Cartier - CP,2.8,Webbwood,Kelly Lake Road,46.47023,-81.03798,Greater Sudbury (ON),Active - FLB,0,0,0,2,4000,10,50,2,1,Y
+3372,30164,Canadian Pacific Railway,ONT,ON,Public,F,79.17,Cartier - CP,0.63,Webbwood,Douglas Street,46.4858,-81.0051,Greater Sudbury (ON),Active - FLBG,0,0,0,2,12000,10,50,4,1,Y
+3550,30179,Huron Central Railway,ONT,ON,Public,P,21.2,Webbwood - HCRC,-,-,Reg Rd 4 (Walden),46.3882,-81.3734,Greater Sudbury (ON),Active - FLB,0,0,0,6,500,40,80,2,1,N
+3574,30165,Canadian Pacific Railway,ONT,ON,Public,F,79.17,Cartier - CP,0.89,Webbwood,Regent Street,46.4824,-81.0074,Greater Sudbury (ON),Active - FLBG,0,0,0,2,10000,10,50,2,1,N
+3747,849,Canadian National Railway,ONT,ON,Public,F,257.17,Bala - CN,-,-,Government Rd (Nickel Cen,46.4905,-80.8386,Greater Sudbury (ON),Active - FLB,0,0,0,21.86,450,50,50,2,1,N
+3784,13807,Canadian National Railway,ONT,ON,Public,F,8.31,Ruel,-,-,Moose Mountain Mine Rd (Reg Rd 84),46.8168,-80.9592,Greater Sudbury (ON),Active - FLB,0,0,0,20.86,250,45,60,2,1,N
+3850,20572,Canadian Pacific Railway,ONT,ON,Public,F,102.37,Cartier - CP,-,-,Gorham'S Landing Road (Marina Rd),46.6012,-81.4052,Greater Sudbury (ON),Active - FLBG,1,0,0,9,300,50,50,2,1,N
+3864,20560,Canadian Pacific Railway,ONT,ON,Public,F,86.91,Cartier - CP,-,-,Marier Street,46.5553,-81.1145,Greater Sudbury (ON),Active - FLBG,0,0,0,9,1008,75,50,2,1,N
+3883,20561,Canadian Pacific Railway,ONT,ON,Public,F,87.91,Cartier - CP,-,-,Montee Principale,46.5623,-81.133,Greater Sudbury (ON),Active - FLBG,0,0,0,9,1000,75,80,2,1,N
+4076,46961,Canadian Pacific Railway,ONT,ON,Public,F,117.2,Parry Sound,-,-,Snowmobile Crossing,46.4386,-80.8445,Greater Sudbury (ON),Other,0,0,0,14,25,45,80,2,1,N
+4224,300753,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,0.88,Sudbury,Elisabella St.,46.5209,-80.9095,Greater Sudbury (ON),Active - FLB,0,0,0,6,2300,10,50,2,1,N
+4698,20539,Canadian Pacific Railway,ONT,ON,Public,F,74.31,Cartier - CP,-,-,Moonlight Beach Road,46.4809,-80.9044,Greater Sudbury (ON),Active - FLBG,0,0,0,10,500,45,80,2,2,N
+4853,20565,Canadian Pacific Railway,ONT,ON,Public,F,91.64,Cartier - CP,-,-,Montpellier Road,46.5865,-81.2026,Greater Sudbury (ON),Active - FLBG,0,0,0,9,500,55,80,2,1,N
+4854,20563,Canadian Pacific Railway,ONT,ON,Public,F,90.94,Cartier - CP,-,-,Main Street (Road 14),46.5832,-81.1888,Greater Sudbury (ON),Active - FLBG,0,0,0,9,500,75,50,2,1,N
+4989,30178,Huron Central Railway,ONT,ON,Public,P,18.32,Webbwood - HCRC,-,-,Bay St.,46.3791,-81.317,Greater Sudbury (ON),Active - FLB,0,0,0,6,500,40,50,2,2,N
+5041,20540,Canadian Pacific Railway,ONT,ON,Public,F,75.47,Cartier - CP,-,-,4Th Avenue,46.4849,-80.9262,Greater Sudbury (ON),Active - FLBG,0,0,0,10,400,45,50,2,2,Y
+5151,34586,Canadian Pacific Railway,ONT,ON,Public,F,96.88,Cartier - CP,-,-,Gordon Lake Road,46.5727,-81.3098,Greater Sudbury (ON),Active - FLB,0,0,0,9,700,65,80,2,1,N
+5346,26785,Canadian Pacific Railway,ONT,ON,Public,F,113.85,Parry Sound,-,-,Axeli Road (Lot 12 Conc 3),46.39992,-80.81316,Greater Sudbury (ON),Passive,1,0,0,10,50,45,50,2,1,N
+5361,15232,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,6.36,Sudbury,Ethelbert St.,46.4967,-81.0141,Greater Sudbury (ON),Active - FLB,0,0,0,6,1000,10,50,2,1,N
+5416,15229,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,5.69,Sudbury,Kathleen St.,46.5003,-81.0016,Greater Sudbury (ON),Active - FLB,0,0,0,6,1000,10,50,2,1,N
+5417,15217,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,2.98,Sudbury,Attlee Ave.,46.5168,-80.9529,Greater Sudbury (ON),Active - FLB,0,0,0,6,1000,10,50,2,1,N
+5721,20566,Canadian Pacific Railway,ONT,ON,Public,F,92.57,Cartier - CP,-,-,McKenzie Road,46.5836,-81.2208,Greater Sudbury (ON),Active - FLBG,0,0,0,9,300,65,50,2,1,N
+5722,20574,Canadian Pacific Railway,ONT,ON,Public,F,103.89,Cartier - CP,-,-,Elks Club Road,46.61452,-81.42875,Greater Sudbury (ON),Active - FLBG,0,0,0,9,300,45,80,2,2,N
+5882,30184,Huron Central Railway,ONT,ON,Public,P,29.48,Webbwood - HCRC,-,-,Regional Rd 3 Or 5?,46.3617,-81.5283,Greater Sudbury (ON),Active - FLB,0,0,0,6,100,40,80,2,1,N
+6199,30176,Huron Central Railway,ONT,ON,Public,P,10.51,Webbwood - HCRC,-,-,Carl Rd.,46.4086,-81.1671,Greater Sudbury (ON),Passive,0,0,0,4,50,40,80,2,1,N
+6211,15210,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,0.7,Sudbury,Foundry Rd,46.5208,-80.90575,Greater Sudbury (ON),Active - FLB,0,0,0,6,400,10,50,2,1,N
+6284,858,GO Transit ,ONT,ON,Public,P,269.94,Bala - GO,0.27,Hydro Electric,Hydro Rd (Valley East),46.625,-80.9242,Greater Sudbury (ON),Passive,0,0,0,10,100,15,80,2,1,N
+6376,34466,Canadian Pacific Railway,ONT,ON,Public,F,75.86,Cartier - CP,-,-,Second Avenue,46.4874,-80.9335,Greater Sudbury (ON),Active - FLBG,0,0,0,10,200,45,50,2,2,N
+6465,300757,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,5.76,Sudbury,Bloor & Lansdowne,46.4994,-81.0026,Greater Sudbury (ON),Active - FLB,0,0,0,6,1000,10,50,2,1,N
+6566,20558,Canadian Pacific Railway,ONT,ON,Public,F,85.41,Cartier - CP,-,-,Montee Rouleau (Regional Road 18),46.5443,-81.0908,Greater Sudbury (ON),Active - FLBG,0,0,0,9,200,50,80,2,1,N
+7153,49569,Canadian National Railway,ONT,ON,Private,F,256.68,Bala - CN,-,-,Coniston Hydro Rd,46.47502,-80.82319,Greater Sudbury (ON),Active - FLBG,0,0,0,21.86,25,35,80,2,1,N
+7214,15221,Canadian Pacific Railway,ONT,ON,Public,F,69.2,Cartier - CP,2.35,Garson,Regional Rd 84 (Garson),46.5684,-80.8497,Greater Sudbury (ON),Passive,0,0,0,20,25,10,80,2,1,N
+7348,49136,Canadian Pacific Railway,ONT,ON,Public,F,69.2,Cartier - CP,5.7,Falconbridge,Happy Valley Rd (Clifford Street),46.5678,-80.8068,Greater Sudbury (ON),Passive,0,0,0,19,25,10,80,2,1,N
+7451,35463,Huron Central Railway,ONT,ON,Public,P,7.25,Webbwood - HCRC,-,-,Mikola Road.,46.4362,-81.1122,Greater Sudbury (ON),Active - FLB,0,0,0,6,50,40,60,2,1,N
+7644,20542,Canadian Pacific Railway,ONT,ON,Public,F,77.25,Cartier - CP,-,-,Harry Crescent,46.48944,-80.96221,Greater Sudbury (ON),Active - FLBG,0,0,0,10,100,40,50,2,2,Y
+7662,35893,Ottawa Valley Railway ,ONT,ON,Public,F,66.18,Cartier - OVR,-,-,Mill Rd,46.49438,-80.76511,Greater Sudbury (ON),Active - FLB,0,0,0,4,343,40,30,2,1,N
+7864,15225,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,5.09,Sudbury,Dell St (Nickel Centre),46.50595,-80.99213,Greater Sudbury (ON),Active - FLB,0,0,0,6,750,10,40,2,1,N
+7974,30181,Huron Central Railway,ONT,ON,Public,P,25.2,Webbwood - HCRC,-,-,C Johnson Rd/Harpenden Rd,46.3826,-81.4509,Greater Sudbury (ON),Active - FLB,0,0,0,4,30,40,80,2,1,N
+8118,30177,Huron Central Railway,ONT,ON,Public,P,11.63,Webbwood - HCRC,-,-,Laura St,46.4037,-81.1891,Greater Sudbury (ON),Active - FLB,0,0,0,6,50,40,50,2,1,N
+8272,20571,Canadian Pacific Railway,ONT,ON,Public,F,99.59,Cartier - CP,-,-,New Cobden Road,46.5764,-81.3672,Greater Sudbury (ON),Active - FLB,0,0,0,9,300,50,50,2,1,N
+8375,34075,Canadian Pacific Railway,ONT,ON,Public,F,79.17,Cartier - CP,1.2,Webbwood,Lilac St (Horobin Street),46.4796,-81.0125,Greater Sudbury (ON),Passive,0,0,0,2,250,10,50,1,1,Y
+8823,15207,Canadian National Railway,ONT,ON,Public,F,262.3,Bala - CN,0.43,Sudbury,Lasalle Blvd.,46.5221,-80.9007,Greater Sudbury (ON),Passive,0,0,0,6,200,10,50,2,1,N
+9125,20564,Canadian Pacific Railway,ONT,ON,Public,F,91.38,Cartier - CP,-,-,Errington Avenue North (Front Street),46.5858,-81.197,Greater Sudbury (ON),Active - FLB,0,0,0,9,302,55,40,2,1,N
+9298,20533,Ottawa Valley Railway ,ONT,ON,Public,F,67.57,Cartier - OVR,-,-,Savard Dr (Whanpitae),46.4896,-80.7859,Greater Sudbury (ON),Active - FLB,0,0,0,4,167,40,40,2,1,N
+9418,20537,Canadian Pacific Railway,ONT,ON,Public,F,71.29,Cartier - CP,-,-,Edward Avenue,46.4861,-80.8498,Greater Sudbury (ON),Active - FLB,0,0,0,2,500,40,50,2,1,N
+9849,300279,Canadian Pacific Railway,ONT,ON,Public,F,72.46,Cartier - CP,-,-,Chisholm Street,46.4853,-80.8741,Greater Sudbury (ON),Active - FLBG,0,0,0,10,30,45,50,2,3,Y
+9996,20567,Canadian Pacific Railway,ONT,ON,Public,F,93.7,Cartier - CP,-,-,McKenzie Road,46.5795,-81.2447,Greater Sudbury (ON),Active - FLBG,0,0,0,9,30,65,80,2,1,N
+10484,51054,GO Transit ,ONT,ON,Public,-,275.65,Bala - GO,0.31,East Leg Of Wye,Capreaol Rd,46.70914,-80.91879,Greater Sudbury (ON),Active - FLB,0,0,0,5,25,15,80,2,1,N
+10725,46139,Canadian National Railway,ONT,ON,Private,F,273.86,Bala - CN,-,-,Private (Capreol),46.6835,-80.91699,Greater Sudbury (ON),Passive,0,0,0,21.86,10,45,25,2,1,N
+10735,30175,Huron Central Railway,ONT,ON,Public,P,10.06,Webbwood - HCRC,-,-,Santala Road.,46.4124,-81.1594,Greater Sudbury (ON),Passive,0,0,0,4,20,40,50,2,1,N
+10754,49058,Canadian National Railway,ONT,ON,Private,F,247.2,Bala - CN,-,-,Macynen Rd,46.38128,-80.81706,Greater Sudbury (ON),Passive,0,0,0,21.86,10,40,25,2,1,N
+10979,36380,Ottawa Valley Railway ,ONT,ON,Public,F,67.14,Cartier - OVR,-,-,Robinson Dr (Whanpitae),46.4874,-80.7782,Greater Sudbury (ON),Active - FLB,0,0,0,2,200,40,50,2,1,N
+11757,700011,Vale Ontario Operations ,ONT,ON,Public,P,102.4,Levack,3.2,Inco,Coleman Mine Rd,46.64673,-81.38229,Greater Sudbury (ON),Active - FLB,0,0,0,-,25,-,80,2,1,N
+11758,700007,Vale Ontario Operations ,ONT,ON,Public,P,102.4,Levack,1.7,Inco,Falcon Rd,46.6296,-81.3936,Greater Sudbury (ON),Active - FLB,0,0,0,-,25,-,80,2,1,N
+11763,700008,Vale Ontario Operations ,ONT,ON,Public,P,102.4,Levack,2.7,Inco,Third Ave,46.6405,-81.3881,Greater Sudbury (ON),Active - FLB,0,0,0,-,25,-,80,2,1,N
+11869,300291,Canadian Pacific Railway,ONT,ON,Private,F,82.99,Cartier - CP,-,-,McKim Mine Rd,46.52292,-81.05626,Greater Sudbury (ON),Active - FLBG,0,0,0,9,10,45,25,2,2,N
+15234,33988,Canadian Pacific Railway,ONT,ON,Public,F,76.68,Cartier - CP,-,-,Portage Avenue,46.48755,-80.95082,Greater Sudbury (ON),Active - FLBG,0,0,0,10,1,40,80,1,2,N
+20297,52086,Canadian National Railway,ONT,ON,Public,-,310.61,Newmarket - CN,-,-,Dennie Street,46.70908,-80.9188,Greater Sudbury (ON),Active - FLBG,0,0,0,-,-,-,-,2,1,N
+20434,34222,Canadian Pacific Railway,ONT,ON,Public,F,86.38,Cartier - CP,-,-,Carriere Street,46.55164,-81.10487,Greater Sudbury (ON),Passive,0,0,0,8,-,60,-,-,1,N
