@@ -570,7 +570,7 @@ References:
     // Context layers: city boundary + rail lines (non-interactive)
     // ---------------------------------------------------------------
 
-    fetch("Data/GovernmentofCanada/CensusOfPopulation/sudbury_boundary.geojson")
+    fetch("data/sudbury-dashboard/Census/sudbury_boundary.geojson")
       .then(res => res.json())
       .then(data => {
         L.geoJSON(data, {
@@ -579,7 +579,7 @@ References:
         }).addTo(map);
       });
 
-    fetch("Data/OSM/sudbury_railway_clipped.geojson")
+    fetch("data/sudbury-dashboard/OSM/sudbury_railway_clipped.geojson")
       .then(res => res.json())
       .then(data => {
         L.geoJSON(data, {
@@ -597,7 +597,7 @@ References:
     let chart;
     let sortDir = 'asc';
 
-    Papa.parse("Data/OpenCanada/sudbury_crossings_cleaned.csv", {
+    Papa.parse("data/sudbury-dashboard/OpenCanada/sudbury_crossings_cleaned.csv", {
       download: true,
       header: true,
       dynamicTyping: true,
